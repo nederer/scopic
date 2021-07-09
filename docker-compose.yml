@@ -29,14 +29,14 @@ services:
       - scopic
       - redis
 
-  celery_flower:
-    image: scopic:local
-    volumes:
-      - ./:/app/scopic_task
-    env_file:
-      - .env
-    ports:
-      - 127.0.0.1:9999:5555
-    command: celery flower -A scopic_task
-    depends_on:
-      - redis
+  # celery_flower:
+  #   image: scopic:local
+  #   volumes:
+  #     - ./:/app/scopic_task
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 127.0.0.1:9999:5555
+  #   command: celery flower -A scopic_task
+  #   depends_on:
+  #     - redis
