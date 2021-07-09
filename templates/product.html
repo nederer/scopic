@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auction</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <script src="{% static "js/product-main.js" %}"></script>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Auction</h1>
+        <p>Find products and make your bid on them</p>
+        <a class="btn btn-primary" href="/autobid"> Configurate auto-bidding</a>
+        <a class="btn btn-primary" href="/"> Main page  </a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="card list-group-item w-50 d-flex">
+            <div class="card-body">
+                <h4 class="card-title"> {{ product.title }} </h4>
+                <p class="card-text"> {{ product.description }} </p>
+                <div class="container input-group mb-3">
+                    <input disabled
+                           type="text"
+                           class="form-control"
+                           placeholder="Current bid is:">
+                    <div class="input-group-append">
+                        <button disabled
+                                class="btn btn-info form-control current-bid"
+                                id="product-bid"> {{ product.current_bid }}
+                        </button>
+                    </div>
+                </div>
+                <div class="container input-group mb-3">
+                    <input disabled
+                           type="text"
+                           class="form-control"
+                           placeholder="Time before closing:">
+                    <div class="input-group-append">
+                        <button disabled
+                                class="btn btn-info form-control current-bid"
+                                id="close-date"> {{ product.close_date|date:'Y-m-d H:i' }}
+                        </button>
+                    </div>
+                </div>
+                <div class="container input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> Bid now: </span>
+                    </div>
+                    <input id="input-bid"
+                            type="number"
+                            class="form-control"
+                            min="{{ product.current_bid|add:1 }}"
+                            max="{{ highest_bid }}"
+                            value="{{ product.current_bid|add:1 }}">
+                    <div class="input-group-append">
+                        <div class="input-group-text" title="Auto-bidding">
+                            <input type="checkbox" id="auto-bid">
+                        </div>
+                        <input type="button"
+                               id="submit-bid"
+                               class="btn btn-info form-control current-bid"
+                               value="Submit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="card list-group-item w-50 d-flex">
+            <table id="bid-list" class="table table-striped"> </table>
+        </div>
+    </div>
+
+    {% csrf_token %}
+</body>
+</html>

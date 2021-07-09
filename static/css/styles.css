@@ -1,0 +1,11 @@
+.blue{
+    background-color: blue;
+}
+
+.page-item{
+    cursor: pointer
+}
+
+.current-bid{
+    text-decoration-color: black;
+}

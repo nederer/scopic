@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auction</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <script src="{% static "js/auto-bidding.js" %}"></script>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Auction</h1>
+        <p>Find products and make your bid on them</p>
+        <a class="btn btn-primary" href="/"> Main page  </a>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="card list-group-item w-50 d-flex">
+            <div class="card-body">
+                <h4 class="card-title"> {{ bidding.user }} </h4>
+                <div class="container input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> Your max auto-bid amount: </span>
+                    </div>
+                    <input id="input-bid"
+                            type="number"
+                            class="form-control"
+                            value="{{ bidding.max_bids }}">
+                    <div class="input-group-append">
+                        <input type="button"
+                               id="change-bid"
+                               class="btn btn-info form-control current-bid"
+                               value="Change">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% csrf_token %}
+</body>
+</html>

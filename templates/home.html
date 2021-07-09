@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auction</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <script src="{% static "js/main.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Auction</h1>
+        <p>Find products and make your bid on them</p>
+        <a class="btn btn-primary" href="/autobid"> Configurate auto-bidding option</a>
+    </div>
+
+    <div class="container input-group mb-3">
+        <input type="search" id="search-text" class="form-control" placeholder="Find your products by title or description:">
+        <div class="input-group-append">
+            <button id="search-btn" class="btn btn-info form-control">Search</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <select name="ordering-dropdown" id="ordering-dropdown" class="form-control">
+            <option selected value> -- Select a sorting -- </option>
+            <option value="current_bid">&#8595;Current price</option>
+            <option value="-current_bid">&#8593;Current price</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="list-group d-flex flex-row flex-wrap">
+                    {% for product in products %}
+                        <div class="card list-group-item w-50 d-flex">
+                            <div class="card-body">
+                                <h4 class="card-title"> {{ product.title }} </h4>
+                                <p class="card-text"> {{ product.description|truncatechars:100 }} </p>
+                                <div class="container input-group mb-3">
+                                    <input disabled
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="Current bid is:">
+                                    <div class="input-group-append">
+                                        <button disabled
+                                                class="btn btn-info form-control current-bid"
+                                                id="product-{{ product.id }}"
+                                        > {{ product.current_bid }} </button>
+                                    </div>
+                                </div>
+                                <a href="/{{ product.id }}" class="card-link btn btn-primary form-control"> Bid now </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" name="1"> First </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" name="{{ page_obj.previous_page_number }}"> Previous </a>
+            </li>
+        {% endif %}
+
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" name="{{ page_obj.next_page_number }}"> next </a></li>
+            <li class="page-item"><a class="page-link" name="{{ page_obj.paginator.num_pages }}"> last </a></li>
+        {% endif %}
+    </ul>
+</body>
+</html>
